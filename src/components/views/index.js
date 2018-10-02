@@ -17,3 +17,5 @@ export * from './WalletDetails';
 export * from './WalletExtract';
 export * from './WalletSettings';
 export * from './WalletsOverview';
+export * from './StakeDetails';
+export * from './StakeTopup';

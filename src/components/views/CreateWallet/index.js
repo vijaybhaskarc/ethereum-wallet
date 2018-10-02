@@ -16,10 +16,8 @@ export class CreateWallet extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.contentContainer}>
-                    <View>
-                        <Text style={styles.message}>When creating a new wallet you will receive a sequence of mnemonics which represent your "personal password". Anyone with this sequence may be able to reconfigure your wallet in any new device. Keep it stored as secure as possible. Only you should have access to this information.</Text>
-                        <Text style={styles.message}>Write it somewhere safe so you can make sure you won't lose it, or you may lose permanently all your coins. There is no way to recover it later.</Text>
-                    </View>
+                    <Text style={styles.message}>When creating a new wallet you will receive a sequence of mnemonics which represent your "personal password". Anyone with this sequence may be able to reconfigure your wallet in any new device. Keep it stored as secure as possible. Only you should have access to this information.</Text>
+                    <Text style={styles.message}>Write it somewhere safe so you can make sure you won't lose it, or you may lose permanently all your coins. There is no way to recover it later.</Text>
                 </View>
                 <View style={styles.buttonsContainer}>
                     <Button onPress={() => this.onPressProceed()}>Proceed</Button>

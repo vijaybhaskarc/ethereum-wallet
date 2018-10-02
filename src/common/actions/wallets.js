@@ -41,3 +41,11 @@ export async function updateHistory(wallet) {
     if (data.status == 1) WalletStore.setHistory(data.result);
     WalletStore.isLoading(false);
 }
+
+export async function setReserve(wallet, reserve) {
+    await WalletStore.setReserve(wallet.item, reserve);
+}
+
+export function getReserve(wallet) {
+    return WalletStore.getReserve(wallet);
+}

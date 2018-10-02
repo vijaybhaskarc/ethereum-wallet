@@ -3,29 +3,32 @@ import { StyleSheet, Text, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { colors, measures } from '@common/styles';
 import { Wallet as WalletUtils } from '@common/utils';
+import { Wallets as WalletActions } from '@common/actions';
+
 
 @inject('prices', 'wallet')
 @observer
-export default class Balance extends React.Component {
+export default class StakeBalance extends React.Component {
 
-    get balance() {
+    get reserve() {
         const { item } = this.props.wallet;
-        return Number(WalletUtils.formatBalance(item.balance));
+        let result= Number(WalletActions.getReserve(this.props.wallet));
+        return result;
     }
     
-    get fiatBalance() {
-        return Number(this.props.prices.usd * this.balance);
+    get fiatReserve() {
+        return Number(this.props.prices.usd * this.reserve);
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.leftColumn}>
-                    <Text style={styles.title}>{this.props.title}</Text>
+                    <Text style={styles.title}>Reserve Balance:</Text>
                 </View>
                 <View style={styles.rightColumn}>
-                    <Text style={styles.balance}>ETH {this.balance.toFixed(3)}</Text>
-                    <Text style={styles.fiatBalance}>US$ {this.fiatBalance.toFixed(2)}</Text>
+                    <Text style={styles.balance}>ETH {this.reserve.toFixed(3)}</Text>
+                    <Text style={styles.fiatBalance}>US$ {this.fiatReserve.toFixed(2)}</Text>
                 </View>
             </View>
         );
@@ -42,14 +45,14 @@ const styles = StyleSheet.create({
         borderBottomColor: colors.lightGray
     },
     leftColumn: {
-        flex: 1
+        flex: 2
     },
     title: {
         fontSize: measures.fontSizeLarge,
         color: colors.gray
     },
     balance: {
-        fontSize: measures.fontSizeMedium + 2,
+        fontSize: measures.fontSizeMedium,
         fontWeight: 'bold',
         color: colors.gray
     },

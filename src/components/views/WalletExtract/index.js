@@ -38,7 +38,7 @@ export class WalletExtract extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Balance />
+                <Balance title="Balance" />
                 {this.renderBody(this.props.wallet)}
             </View>
         );

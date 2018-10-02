@@ -20,7 +20,9 @@ const navigator = StackNavigator({
     Settings: { screen: Views.Settings },
     ShowPrivateKey: { screen: Views.ShowPrivateKey },
     WalletDetails: { screen: Views.WalletDetails },
-    WalletsOverview: { screen: Views.WalletsOverview }
+    WalletsOverview: { screen: Views.WalletsOverview },
+    StakeDetails: { screen: Views.StakeDetails },
+    StakeTopup: { screen: Views.StakeTopup }
 }, {
     initialRouteName: INITIAL_ROUTE,
     navigationOptions: {

@@ -6,7 +6,8 @@ const INITIAL = {
     item: null,
     history: [],
     pendingTransactions: [],
-    loading: false
+    loading: false,
+    reserves: {}
 };
 
 export class WalletStore {
@@ -15,6 +16,7 @@ export class WalletStore {
     @observable history = INITIAL.history;
     @observable pendingTransactions = INITIAL.pendingTransactions;
     @observable loading = INITIAL.loading;
+    @observable reserves = INITIAL.reserves;
 
     @action isLoading(state) {
         this.loading = Boolean(state);
@@ -29,6 +31,25 @@ export class WalletStore {
         if (!this.item) throw new Error(`Can't update the history. No wallet was selected.`);
         if (!(history instanceof Array)) throw new Error('The history must be an array.');
         this.history = history;
+    }
+
+    @action setReserve(item, reserve) {
+        r = this.reserves[item.name];
+        if (r !== undefined && !isNaN(r)) {
+            r += reserve;
+        } else {
+            r = reserve;
+        }
+        this.reserves[item.name] = r;
+    }
+
+    getReserve(wallet) {
+        console.log("wallet.item.name=" + wallet.item.name + ", reserves=" + JSON.stringify(this.reserves));
+        r = this.reserves[wallet.item.name];
+        if (r === undefined || isNaN(r)) {
+            return 0.0;
+        }
+        return r;
     }
 
     @action addPendingTransaction(txn) {
@@ -46,6 +67,7 @@ export class WalletStore {
         this.history = INITIAL.history;
         this.pendingTransactions = INITIAL.pendingTransactions;
         this.loading = INITIAL.loading;
+        this.reserves = INITIAL.reserves;
     }
 }
 
