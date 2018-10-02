@@ -1,6 +1,6 @@
 # Ethereum Wallet
 
-This project is a Ethereum Wallet built on top of ReactNative.
+This project is a Ethereum Wallet (Delegate App) built on top of ReactNative.
 
 ## Table of Contents
 
