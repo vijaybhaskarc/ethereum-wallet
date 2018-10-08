@@ -23,3 +23,11 @@ export async function sendTransaction(wallet, txn) {
   waitForTransaction(wallet, txn);
   return txn;
 }
+
+export async function sendERC20Transaction(wallet, txn) {
+  if (!(wallet instanceof ethers.Wallet)) throw new Error('Invalid wallet');
+  txn = await TransactionsService.sendERC20Transaction(wallet, txn);
+  WalletStore.addPendingTransaction(txn);
+  waitForTransaction(wallet, txn);
+  return txn;
+}

@@ -20,6 +20,7 @@ export class WalletExtract extends React.Component {
         try {
             await WalletActions.updateHistory(this.props.wallet.item);
         } catch (e) {
+            console.log("updateHistory(): e=" + JSON.stringify(e));
             GeneralActions.notify(e.message, 'long');
         }
     }

@@ -84,56 +84,13 @@ export default class TransactionDetails extends React.Component {
                     <Text style={styles.label}>To:</Text>
                     <Text style={styles.value}>{transaction.to}</Text>
                 </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Timestamp:</Text>
-                    <Text style={styles.value}>{this.timestamp}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Amount (ETH):</Text>
-                    <Text style={styles.value}>{this.balance}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Amount (US$):</Text>
-                    <Text style={styles.value}>{this.fiatBalance}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Block number:</Text>
-                    <Text style={styles.value}>{transaction.blockNumber}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Block hash:</Text>
-                    <Text style={styles.value}>{transaction.blockHash}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Gas:</Text>
-                    <Text style={styles.value}>{transaction.gas}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Gas price:</Text>
-                    <Text style={styles.value}>{transaction.gasPrice}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Gas used:</Text>
-                    <Text style={styles.value}>{transaction.gasUsed}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Cumulative gas used:</Text>
-                    <Text style={styles.value}>{transaction.cumulativeGasUsed}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Confirmations:</Text>
-                    <Text style={styles.value}>{transaction.confirmations}</Text>
-                </View>
-                <View style={styles.row}>
-                    <Text style={styles.label}>Error:</Text>
-                    <Text style={styles.value}>{this.transactionError}</Text>
-                </View>
             </ScrollView>
         </View>
     );
 
     render() {
         const { transaction } = this.props;
+        console.log("this.props= " + JSON.stringify(this.props));
         return (
             <Modal
                 isVisible={this.state.show}

@@ -43,7 +43,7 @@ export default class Panel extends React.Component {
             <View style={styles.container}>
                 <View style={styles.row}>
                     <Text style={styles.amount}>{this.amount}</Text>
-                    <Text style={styles.unit}>ETH</Text>
+                    <Text style={styles.unit}>ICASH</Text>
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.fiat}>US$ {this.fiatAmount}</Text>

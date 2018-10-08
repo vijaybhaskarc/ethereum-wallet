@@ -27,7 +27,7 @@ export default class StakeBalance extends React.Component {
                     <Text style={styles.title}>Reserve Balance:</Text>
                 </View>
                 <View style={styles.rightColumn}>
-                    <Text style={styles.balance}>ETH {this.reserve.toFixed(3)}</Text>
+                    <Text style={styles.balance}>ICASH {this.reserve.toFixed(3)}</Text>
                     <Text style={styles.fiatBalance}>US$ {this.fiatReserve.toFixed(2)}</Text>
                 </View>
             </View>

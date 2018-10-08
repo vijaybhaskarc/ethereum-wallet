@@ -3,7 +3,7 @@ import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { Button } from '@components/widgets';
 import { measures } from '@common/styles';
-import { Recents as RecentsActions, Transactions as TransactionActions } from '@common/actions';
+import { Recents as RecentsActions, Transactions as TransactionActions, Wallets as WalletActions } from '@common/actions';
 import { Image as ImageUtils, Transaction as TransactionUtils, Wallet as WalletUtils } from '@common/utils';
 import ErrorMessage from './ErrorMessage';
 import SuccessMessage from './SuccessMessage';
@@ -33,6 +33,7 @@ export class ConfirmTransaction extends React.Component {
 
     get estimatedFee() {
         const estimate = WalletUtils.estimateFee(this.state.txn);
+        console.log("Txn = " + JSON.stringify(this.state.txn) + ", estimated fee = " + JSON.stringify(estimate));
         return WalletUtils.formatBalance(estimate);
     }
     
@@ -47,7 +48,8 @@ export class ConfirmTransaction extends React.Component {
 
     componentDidMount() {
         const { address, amount } = this.props.navigation.state.params;
-        const txn = TransactionUtils.createTransaction(address, amount);
+        const txn = TransactionUtils.createERC20Transaction(address, amount);
+        console.log("componentDidMount, txn=" + JSON.stringify(txn));
         this.setState({ txn });
     }
 
@@ -55,7 +57,7 @@ export class ConfirmTransaction extends React.Component {
         const { wallet } = this.props;
         wallet.isLoading(true);
         try {
-            const txn = await TransactionActions.sendTransaction(wallet.item, this.state.txn);
+            const txn = await TransactionActions.sendERC20Transaction(wallet.item, this.state.txn);
             this.setState({ txn });
             RecentsActions.saveAddressToRecents(txn.to);
         } catch (error) {
@@ -72,6 +74,17 @@ export class ConfirmTransaction extends React.Component {
 
     render() {
         const { error, txn } = this.state;
+        console.log("render() called on transaction, this.state = " + JSON.stringify(this.state) + ", this.props = " + JSON.stringify(this.props));
+        if (txn && txn.hash && this.props.wallet) {
+            WalletActions.updateBalances();
+            /*
+            WalletActions.updateBalance(this.props.wallet.item).then(function(result) {
+                console.log("result=" + result);
+            }).catch(function(err) {
+                console.log("err=" + err);
+            });
+            */
+        }
         return (!txn) ? null : (
             <View style={styles.container}>
                 <View style={styles.content}>
@@ -87,11 +100,11 @@ export class ConfirmTransaction extends React.Component {
                             source={{ uri: ImageUtils.generateAvatar(txn.to) }} />
                     </View>
                     <View style={styles.textColumn}>
-                        <Text style={styles.title}>Amount (ETH)</Text>
+                        <Text style={styles.title}>Amount (ICASH)</Text>
                         <Text style={styles.value}>{WalletUtils.formatBalance(txn.value)} (US$ {this.fiatAmount})</Text>
                     </View>
                     <View style={styles.textColumn}>
-                        <Text style={styles.title}>Estimated fee (ETH)</Text>
+                        <Text style={styles.title}>Estimated fee (ICASH)</Text>
                         <Text style={styles.value}>{this.estimatedFee} (US$ {this.fiatEstimatedFee})</Text>
                     </View>
                 </View>

@@ -24,7 +24,7 @@ export default class Balance extends React.Component {
                     <Text style={styles.title}>{this.props.title}</Text>
                 </View>
                 <View style={styles.rightColumn}>
-                    <Text style={styles.balance}>ETH {this.balance.toFixed(3)}</Text>
+                    <Text style={styles.balance}>ICASH {this.balance.toFixed(3)}</Text>
                     <Text style={styles.fiatBalance}>US$ {this.fiatBalance.toFixed(2)}</Text>
                 </View>
             </View>

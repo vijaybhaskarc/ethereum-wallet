@@ -1,13 +1,22 @@
 import ethers from 'ethers';
 
+import { Config } from '@common/constants';
+
 const { HDNode, providers, utils, Wallet } = ethers;
 
-const network = (process.env.NODE_ENV === 'production') ? 'mainnet' : 'rinkeby';
+// const network = (process.env.NODE_ENV === 'production') ? 'mainnet' : 'rinkeby';
 // let network = (process.env.NODE_ENV === 'production') ?
 //     { name: 'mainnet', ensAddress: '0x314159265dd8dbb310642f98f50c066173c1259b', chainId: 1 } :
 //     { name: 'rinkeby', ensAddress: '0xe7410170f87102df0055eb195163a03b7f2bff4a', chainId: 4 };
 
-const PROVIDER = providers.getDefaultProvider(network);
+//const PROVIDER = providers.getDefaultProvider(network);
+
+export const PROVIDER = new providers.JsonRpcProvider(Config.PARAMS.public_blockchain.provider.url,
+                                                        { 
+                                                           name: Config.PARAMS.public_blockchain.provider.name, 
+                                                           chainId: Config.PARAMS.public_blockchain.provider.chainId
+                                                        });
+
 
 export function generateMnemonics() {
     return HDNode.entropyToMnemonic(utils.randomBytes(16)).split(' ');
@@ -34,7 +43,14 @@ export function loadWalletFromPrivateKey(pk) {
 }
 
 export function formatBalance(balance) {
-    return utils.formatEther(balance);
+    //const result= utils.formatEther(balance);
+    // TODO
+    const value = balance;
+    if (!(value instanceof utils.BigNumber)) {
+        return value;
+    } else {
+        return value.toNumber();
+    }
 }
 
 export function reduceBigNumbers(items) {

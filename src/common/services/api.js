@@ -2,7 +2,8 @@ import axios from 'axios';
 import { Url } from '@common/constants';
 
 export function getPrice() {
-    return axios.get(`${Url.CRYPTO_COMPARE}/data/price?fsym=ETH&tsyms=USD,EUR,BRL`);
+    // Convert ICASH to currencies
+    return axios.get(`${Url.CRYPTO_COMPARE}/data/price?fsym=ICASH&tsyms=USD,EUR,BRL`);
 }
 
 export function getHistory(address) {

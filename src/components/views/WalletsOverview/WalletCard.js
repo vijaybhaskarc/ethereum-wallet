@@ -16,6 +16,7 @@ export default class WalletCard extends React.Component {
     }
 
     get fiatBalance() {
+        // TODO convert to USD
         return Number(this.props.prices.usd * this.balance);
     }
 
