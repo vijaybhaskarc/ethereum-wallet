@@ -4,6 +4,7 @@ This project is a Ethereum Wallet (Delegate App) built on top of ReactNative.
 
 ## Table of Contents
 
+* [Dev Setup - How to run IOS / Android simulator locally]
 * [Available Scripts](#available-scripts)
   * [npm start](#npm-start)
   * [npm test](#npm-test)
@@ -15,6 +16,17 @@ This project is a Ethereum Wallet (Delegate App) built on top of ReactNative.
 * [Writing and Running Tests](#writing-and-running-tests)
 * [License](#license)
 * [Contribute](#contribute)
+
+## Dev Setup - How to run IOS / Android simulator locally
+### On IOS:
+- `yarn install` (or `npm install`)
+- `yarn start` (or `npm start`)
+- `yarn run ios` (or `npm run ios`)
+
+### On Android:
+- `yarn install` (or `npm install`)
+- `yarn start` (or `npm start`)
+- `yarn run android` (or `npm run android`)
 
 ## Available Scripts
 
