@@ -73,7 +73,8 @@ const ABI_transfer = [
         //var numberOfTokens = ethers.utils.parseUnits(amount, numberOfDecimals);
         var numberOfTokens = amount;
         // send tokens
-        let result = contract.transfer(to, numberOfTokens, {from: '0x...', to: '0x...', gasLimit: , gasPrice:...});
+        let result = contract.transfer(to, numberOfTokens);
+        //let result = contract.transfer(to, numberOfTokens, {from: wallet.privateKey, to: ERC20_ADDRESS, gasLimit: 20, gasPrice:2});
         console.log("transferERC20 to = " + to + ", numberOfTokens=" + numberOfTokens + ",immediate result=" + JSON.stringify(result));
         return result;
     } catch (e) {
