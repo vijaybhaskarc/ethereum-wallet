@@ -14,8 +14,8 @@ export class StakeTopup extends React.Component {
     topupReserve() {
         const { amount } = this.refs.calc;
         console.log("topupReserve called, amount =" + amount + ", wallet=" + JSON.stringify(this.props.wallet));
-        WalletActions.setReserve(this.props.wallet, amount);
-        this.props.navigation.navigate('WalletDetails', this.props.wallet);
+        this.props.navigation.navigate('ConfirmReserveTopup', { amount });
+        //this.props.navigation.navigate('WalletDetails', this.props.wallet);
     }
 
     onPressConfirmTopupReserve() {

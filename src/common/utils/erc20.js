@@ -64,18 +64,19 @@ const ABI_transfer = [
     }
  ];
 
- export const transferToken = async(wallet, to, amount) => {
+ export const transferToken = async(wallet, txn) => {
     try {
         var contract = new ethers.Contract(ERC20_ADDRESS, ABI_transfer, wallet);
         //TODO 
         //var numberOfDecimals = 18;
         // convert token
         //var numberOfTokens = ethers.utils.parseUnits(amount, numberOfDecimals);
-        var numberOfTokens = amount;
+        var numberOfTokens = txn.amount;
         // send tokens
-        let result = contract.transfer(to, numberOfTokens);
-        //let result = contract.transfer(to, numberOfTokens, {from: wallet.privateKey, to: ERC20_ADDRESS, gasLimit: 20, gasPrice:2});
-        console.log("transferERC20 to = " + to + ", numberOfTokens=" + numberOfTokens + ",immediate result=" + JSON.stringify(result));
+        console.log("transferToken, transaction=" + JSON.stringify(txn));
+        let result = contract.transfer(txn.to, numberOfTokens);
+        
+        console.log("transferToken, immediate result=" + JSON.stringify(result));
         return result;
     } catch (e) {
         console.log("transferToken, e = " + JSON.stringify(e));

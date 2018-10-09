@@ -1,6 +1,7 @@
 export * from './ChangeCurrency';
 export * from './ConfirmMnemonics';
 export * from './ConfirmTransaction';
+export * from './ConfirmReserveTopup';
 export * from './CreateMnemonics';
 export * from './CreateWallet';
 export * from './LoadMnemonics';

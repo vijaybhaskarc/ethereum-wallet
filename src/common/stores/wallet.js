@@ -7,7 +7,7 @@ const INITIAL = {
     history: [],
     pendingTransactions: [],
     loading: false,
-    reserves: {}
+    reserves:{}
 };
 
 export class WalletStore {
@@ -34,24 +34,17 @@ export class WalletStore {
     }
 
     @action setReserve(item, reserve) {
-        r = this.reserves[item.name];
-        if (r !== undefined && !isNaN(r)) {
-            r += reserve;
-        } else {
-            r = reserve;
-        }
-        this.reserves[item.name] = r;
+        this.reserves[item.address] = reserve;
     }
 
-    getReserve(wallet) {
-        console.log("wallet.item.name=" + wallet.item.name + ", reserves=" + JSON.stringify(this.reserves));
-        r = this.reserves[wallet.item.name];
+    getReserve(item) {
+        r = this.reserves[item.address];
         if (r === undefined || isNaN(r)) {
             return 0.0;
         }
         return r;
     }
-
+    
     @action addPendingTransaction(txn) {
         this.pendingTransactions.push(txn);
     }

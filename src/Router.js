@@ -9,6 +9,7 @@ const navigator = StackNavigator({
     ChangeCurrency: { screen: Views.ChangeCurrency },
     ConfirmMnemonics: { screen: Views.ConfirmMnemonics },
     ConfirmTransaction: { screen: Views.ConfirmTransaction },
+    ConfirmReserveTopup: { screen: Views.ConfirmReserveTopup },
     CreateMnemonics: { screen: Views.CreateMnemonics },
     CreateWallet: { screen: Views.CreateWallet },
     LoadMnemonics: { screen: Views.LoadMnemonics },

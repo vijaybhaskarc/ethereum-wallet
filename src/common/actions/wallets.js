@@ -2,6 +2,7 @@ import { wallet as WalletStore, wallets as WalletsStore } from '@common/stores';
 import { Wallets as WalletsService, Api as ApiService } from '@common/services';
 import { Wallet as WalletUtils } from '@common/utils';
 import { ERC20 as ERC20Utils } from '@common/utils'; 
+import { Escrow as EscrowUtils } from '@common/utils'; 
 
 
 const walletCache = new Map();
@@ -17,6 +18,12 @@ export function removeWalletFromCache(wallet) {
 export function updateBalances() {
     walletCache.forEach(function(value, key, map) {
         updateBalance(value);
+    });
+}
+
+export function updateReserves() {
+    walletCache.forEach(function(value, key, map) {
+        updateReserve(value);
     });
 }
 
@@ -39,7 +46,6 @@ export async function loadWallets() {
 }
 
 export async function updateBalance(wallet) {
-    //const balance = await wallet.getBalance();
     const balance = await ERC20Utils.getBalance(wallet);
     WalletsStore.setBalance(wallet.getAddress(), balance);
 }
@@ -64,10 +70,15 @@ export async function updateHistory(wallet) {
     WalletStore.isLoading(false);
 }
 
-export async function setReserve(wallet, reserve) {
-    await WalletStore.setReserve(wallet.item, reserve);
+export function getReserve(item) {
+    return WalletStore.getReserve(item);
 }
 
-export function getReserve(wallet) {
-    return WalletStore.getReserve(wallet);
+export async function setReserve(item, reserve) {
+    await WalletStore.setReserve(item, reserve);
+}
+
+export async function updateReserve(item) {
+    const reserve = await EscrowUtils.getReserve(item);
+    WalletStore.setReserve(item, reserve);
 }

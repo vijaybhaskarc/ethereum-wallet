@@ -11,13 +11,19 @@ import { Wallets as WalletActions } from '@common/actions';
 export default class StakeBalance extends React.Component {
 
     get reserve() {
-        const { item } = this.props.wallet;
-        let result= Number(WalletActions.getReserve(this.props.wallet));
+        let result= Number(WalletActions.getReserve(this.props.wallet.item));
+        if (isNaN(result)) {
+            result = 0.0;
+        }
         return result;
     }
     
     get fiatReserve() {
         return Number(this.props.prices.usd * this.reserve);
+    }
+
+    componentDidMount() {
+        WalletActions.updateReserve(this.props.wallet);
     }
 
     render() {
@@ -45,7 +51,7 @@ const styles = StyleSheet.create({
         borderBottomColor: colors.lightGray
     },
     leftColumn: {
-        flex: 2
+        flex: 4
     },
     title: {
         fontSize: measures.fontSizeLarge,
@@ -61,7 +67,7 @@ const styles = StyleSheet.create({
         color: colors.gray
     },
     rightColumn: {
-        flex: 1,
+        flex: 3,
         alignItems: 'flex-end',
         justifyContent: 'center'
     }

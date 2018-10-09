@@ -10,9 +10,9 @@ import SuccessMessage from './SuccessMessage';
 
 @inject('prices', 'wallet')
 @observer
-export class ConfirmTransaction extends React.Component {
+export class ConfirmReserveTopup extends React.Component {
     
-    static navigationOptions = { title: 'Confirm transaction' };
+    static navigationOptions = { title: 'Confirm Reserve Top-up' };
 
     state = { txn: null, error: null };
 
@@ -20,15 +20,14 @@ export class ConfirmTransaction extends React.Component {
         return { title: 'Return to wallet', action: () => this.onPressReturn() };
     }
 
-    get confirmButton() {
-        return { title: 'Confirm & send', action: () => this.onPressSend() };
-    }
-
     get actionButton() {
         if (this.props.wallet.loading) return <ActivityIndicator loading />;
-        const buttonConfig = ((this.state.txn && this.state.txn.hash) || this.state.error) ?
-            this.returnButton : this.confirmButton;
-         return <Button children={buttonConfig.title} onPress={buttonConfig.action} />;
+        if ((this.state.txn && this.state.txn.hash) || this.state.error) {
+            buttonConfig = this.returnButton;
+            return <Button children={buttonConfig.title} onPress={buttonConfig.action} />;
+        } else {
+            return null;
+        }
     }
 
     get estimatedFee() {
@@ -46,18 +45,25 @@ export class ConfirmTransaction extends React.Component {
     }
 
     componentDidMount() {
-        const { address, amount } = this.props.navigation.state.params;
-        // this is an ABI call to ERC20 contract, setting the 'wei' value to 0.
-        const txn = TransactionUtils.createERC20Transaction(address, amount, 0);
-        console.log("componentDidMount, txn=" + JSON.stringify(txn));
+        const { wallet } = this.props;
+        const { amount } = this.props.navigation.state.params;
+        // this is an ABI call to Escrow account, as well as sending money to Escrow address.
+        const txn = TransactionUtils.createERC20Transaction(wallet.item.address, amount, 0);
+        console.log("confirmReserveTopup.componentDidMount(): txn=" + JSON.stringify(txn));
         this.setState({ txn });
+        this.peformEscrow(txn);
     }
 
-    async onPressSend() {
+    async peformEscrow(txn) {
         const { wallet } = this.props;
         wallet.isLoading(true);
         try {
-            const txn = await TransactionActions.sendERC20Transaction(wallet.item, this.state.txn);
+            if (txn == null) {
+                txn = this.state.txn;
+            }
+            console.log("confirmReserveTopup.peformEscrow(): txn=" + JSON.stringify(txn));
+            txn = await TransactionActions.sendEscrowAndTransaction(wallet.item, txn);
+            console.log("confirmReserveTopup.peformEscrow(): returned txn=" + JSON.stringify(txn));
             this.setState({ txn });
             RecentsActions.saveAddressToRecents(txn.to);
         } catch (error) {
@@ -75,7 +81,7 @@ export class ConfirmTransaction extends React.Component {
     render() {
         const { error, txn } = this.state;
         if (txn && txn.hash && this.props.wallet) {
-            WalletActions.updateBalances();
+            WalletActions.updateReserves();
         }
         return (!txn) ? null : (
             <View style={styles.container}>
