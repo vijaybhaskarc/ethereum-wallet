@@ -11,7 +11,6 @@ import { Wallets as WalletActions } from '@common/actions';
 export default class StakeBalance extends React.Component {
 
     get reserve() {
-        console.log("StakeBalance.reserve(): this.props.wallet=" + JSON.stringify(this.props.wallet));
         let result= Number(WalletActions.getReserve(this.props.wallet.item));
         if (isNaN(result)) {
             result = 0.0;

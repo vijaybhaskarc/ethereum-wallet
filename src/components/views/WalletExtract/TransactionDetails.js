@@ -90,7 +90,6 @@ export default class TransactionDetails extends React.Component {
 
     render() {
         const { transaction } = this.props;
-        console.log("this.props= " + JSON.stringify(this.props));
         return (
             <Modal
                 isVisible={this.state.show}

@@ -80,7 +80,6 @@ const ABI_transfer = [
         //var numberOfTokens = ethers.utils.parseUnits(amount, numberOfDecimals);
         var numberOfTokens = txn.amount;
         // send tokens
-        console.log("escrowToken, transaction=" + JSON.stringify(txn));
         let result = contract.escrow(txn.to, numberOfTokens);
         console.log("escrowToken, immediate result=" + JSON.stringify(result));
         return result;

@@ -49,7 +49,6 @@ export class ConfirmTransaction extends React.Component {
         const { address, amount } = this.props.navigation.state.params;
         // this is an ABI call to ERC20 contract, setting the 'wei' value to 0.
         const txn = TransactionUtils.createERC20Transaction(address, amount, 0);
-        console.log("componentDidMount, txn=" + JSON.stringify(txn));
         this.setState({ txn });
     }
 

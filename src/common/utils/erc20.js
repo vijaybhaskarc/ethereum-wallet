@@ -31,7 +31,6 @@ const ABI_balanceOf = [
 ];
 
 export const getBalance = async (wallet) => {
-    console.log("getBalance, wallet=" + JSON.stringify(wallet));
     const tokenAddress = ERC20_ADDRESS;
     const contract = new Contract(tokenAddress, ABI_balanceOf, PROVIDER);
     try {
@@ -73,7 +72,6 @@ const ABI_transfer = [
         //var numberOfTokens = ethers.utils.parseUnits(amount, numberOfDecimals);
         var numberOfTokens = txn.amount;
         // send tokens
-        console.log("transferToken, transaction=" + JSON.stringify(txn));
         let result = contract.transfer(txn.to, numberOfTokens);
         
         console.log("transferToken, immediate result=" + JSON.stringify(result));
