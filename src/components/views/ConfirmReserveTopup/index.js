@@ -82,6 +82,7 @@ export class ConfirmReserveTopup extends React.Component {
         const { error, txn } = this.state;
         if (txn && txn.hash && this.props.wallet) {
             WalletActions.updateReserves();
+            WalletActions.updateBalances();
         }
         return (!txn) ? null : (
             <View style={styles.container}>

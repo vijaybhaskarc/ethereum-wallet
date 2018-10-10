@@ -34,6 +34,7 @@ export class WalletStore {
     }
 
     @action setReserve(item, reserve) {
+        console.log("setReserve: item =" + JSON.stringify(item));
         this.reserves[item.address] = reserve;
     }
 

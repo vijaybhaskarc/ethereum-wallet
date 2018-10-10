@@ -8,7 +8,11 @@ import { Escrow as EscrowUtils } from '@common/utils';
 const walletCache = new Map();
 
 export function addWalletToCache(wallet) {
-    walletCache.set(wallet.privateKey, wallet);
+    if (wallet.item != null) {
+        walletCache.set(wallet.privateKey, wallet.item);
+    } else {
+        walletCache.set(wallet.privateKey, wallet);
+    }
 }
 
 export function removeWalletFromCache(wallet) {
@@ -79,6 +83,10 @@ export async function setReserve(item, reserve) {
 }
 
 export async function updateReserve(item) {
-    const reserve = await EscrowUtils.getReserve(item);
-    WalletStore.setReserve(item, reserve);
+    let _item = item;
+    if (_item.item != null) {
+        _item = _item.item;
+    }
+    const reserve = await EscrowUtils.getReserve(_item);
+    WalletStore.setReserve(_item, reserve);
 }
