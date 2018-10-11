@@ -22,6 +22,7 @@ export default class WalletCard extends React.Component {
 
     componentDidMount() {
         WalletActions.updateBalance(this.props.wallet);
+        WalletActions.updateEscrowAddress(this.props.wallet);
     }
 
     render() {

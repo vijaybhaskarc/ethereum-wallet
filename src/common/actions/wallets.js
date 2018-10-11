@@ -2,7 +2,6 @@ import { wallet as WalletStore, wallets as WalletsStore } from '@common/stores';
 import { Wallets as WalletsService, Api as ApiService } from '@common/services';
 import { Wallet as WalletUtils } from '@common/utils';
 import { ERC20 as ERC20Utils } from '@common/utils'; 
-import { Escrow as EscrowUtils } from '@common/utils'; 
 
 
 const walletCache = new Map();
@@ -87,6 +86,24 @@ export async function updateReserve(item) {
     if (_item.item != null) {
         _item = _item.item;
     }
-    const reserve = await EscrowUtils.getReserve(_item);
+    const reserve = await ERC20Utils.getReserve(_item);
     WalletStore.setReserve(_item, reserve);
 }
+
+export async function updateEscrowAddress(wallet) {
+    let address = await ERC20Utils.createEscrowAddress(wallet);
+    if (address != null) {
+        address = await ERC20Utils.getEscrowAddress(wallet);
+    }
+    console.log("updateEscrowAddress(): wallet = " + JSON.stringify(wallet) + ", escrowAddress=" + address);
+    WalletStore.setEscrowAddress(wallet, address);
+}
+
+export function getEscrowAddress(item) {
+    return WalletStore.getEscrowAddress(item);
+}
+
+export async function setEscrowAddress(item, address) {
+    await WalletStore.setEscrowAddress(item, address);
+}
+

@@ -48,7 +48,7 @@ export class ConfirmReserveTopup extends React.Component {
         const { wallet } = this.props;
         const { amount } = this.props.navigation.state.params;
         // this is an ABI call to Escrow account, as well as sending money to Escrow address.
-        const txn = TransactionUtils.createERC20Transaction(wallet.item.address, amount, 0);
+        const txn = TransactionUtils.createERC20Transaction(WalletActions.getEscrowAddress(wallet.item), amount, 0);
         this.setState({ txn });
         this.peformEscrow(txn);
     }

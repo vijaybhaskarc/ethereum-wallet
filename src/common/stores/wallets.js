@@ -32,7 +32,6 @@ export class WalletsStore {
         wallet.balance = amount;
         const otherWallets = this.list.filter(wallet => wallet.getAddress() !== address);
         this.list = [...otherWallets, wallet];
-        console.log("setBalance, wallet=" + JSON.stringify(wallet));
     }
 
     @action reset() {

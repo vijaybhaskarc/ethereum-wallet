@@ -7,7 +7,8 @@ const INITIAL = {
     history: [],
     pendingTransactions: [],
     loading: false,
-    reserves:{}
+    reserves:{},
+    escrowAddress:{}
 };
 
 export class WalletStore {
@@ -17,6 +18,7 @@ export class WalletStore {
     @observable pendingTransactions = INITIAL.pendingTransactions;
     @observable loading = INITIAL.loading;
     @observable reserves = INITIAL.reserves;
+    @observable escrowAddress = INITIAL.escrowAddress;
 
     @action isLoading(state) {
         this.loading = Boolean(state);
@@ -33,10 +35,6 @@ export class WalletStore {
         this.history = history;
     }
 
-    @action setReserve(item, reserve) {
-        this.reserves[item.address] = reserve;
-    }
-
     getReserve(item) {
         r = this.reserves[item.address];
         if (r === undefined || isNaN(r)) {
@@ -45,6 +43,23 @@ export class WalletStore {
         return r;
     }
     
+    @action setReserve(item, reserve) {
+        this.reserves[item.address] = reserve;
+    }
+
+    getEscrowAddress(item) {
+        r = this.escrowAddress[item.address];
+        if (r === undefined || isNaN(r)) {
+            console.log("Cannot find escrow address on item=" + JSON.stringify(item));
+            return undefined;
+        }
+        return r;
+    }
+    
+    @action setEscrowAddress(item, address) {
+        this.escrowAddress[item.address] = address;
+    }
+
     @action addPendingTransaction(txn) {
         this.pendingTransactions.push(txn);
     }
@@ -61,6 +76,7 @@ export class WalletStore {
         this.pendingTransactions = INITIAL.pendingTransactions;
         this.loading = INITIAL.loading;
         this.reserves = INITIAL.reserves;
+        this.escrowAddress = INITIAL.escrowAddress;
     }
 }
 
